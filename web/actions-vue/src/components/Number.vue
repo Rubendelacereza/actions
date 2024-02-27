@@ -1,29 +1,34 @@
+<!-- Number.vue -->
+
 <template>
   <div>
-    <ul>
-      <li v-for="number in numbers" :key="number" @click="handleClick(number)">
-        {{ number }} - {{ clickedNumber === number ? 'Clicado' : 'No clicado' }}
-      </li>
-    </ul>
+    <button v-for="number in numbers" :key="number" @click="handleClick(number)" :class="{ 'clicked': clickedNumbers.includes(number) }">
+      {{ number }}
+    </button>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      clickedNumber: null
-    };
-  },
-  methods: {
-    handleClick(number) {
-      this.clickedNumber = number;
-    }
+<script setup>
+import { ref } from 'vue';
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const clickedNumbers = ref([]);
+
+const handleClick = (number) => {
+  if (!clickedNumbers.value.includes(number)) {
+    clickedNumbers.value.push(number);
+  } else {
+    // Si el número ya está clicado, no hacemos nada
   }
+
+  // Mostrar los números clicados en la consola
+  console.log('Números clicados:', clickedNumbers.value);
 };
 </script>
 
 <style scoped>
-/* Estilos específicos del componente si es necesario */
+button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+}
 </style>
