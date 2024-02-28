@@ -1,11 +1,27 @@
 name: Preparant per producció
-run-name: ${{ github.actor }} està pujant l'aplicació a PROD  🚀
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  Pujar-a-produccio-amb-SCP:
+  Lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtenint el codi del respositori
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint # Asegúrate de ajustar este comando según tu configuración
+
+  Pujar-a-produccio-amb-SCP:
+    runs-on: ubuntu-latest
+    needs: Lint
+    steps:
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: scp a produccio
@@ -20,4 +36,4 @@ jobs:
           npm run build
           scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
           
-      - run: echo "🍏 This job's status is ${{ job.status }}."º
+      - run: echo "🍏 This job's status is ${{ job.status }}."
