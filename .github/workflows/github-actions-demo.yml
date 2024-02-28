@@ -18,28 +18,9 @@ jobs:
       - name: Linting
         run: |
           cd ${{ github.workspace }}
-          echo "Running ESLint" > ./web/last_deploy.txt
-          date >> ./web/last_deploy.txt
           cd ./web/actions-vue/
           npm install
           npm run lint
-
-      - name: Construir la aplicación
-        run: |
-          cd ${{ github.workspace }}
-          cd ./web/actions-vue/
-          npm install
-          npm run build
-
-      - name: Despliegue a producción
-        run: |
-          echo "${{ github.actor }} està pujant l'aplicació a PROD 🚀" > ./web/last_deploy.txt
-          date >> ./web/last_deploy.txt
-          echo "${{ secrets.PROD_KEY }}" > ~/prod_key.pem
-          chmod 600 ~/prod_key.pem
-          cd ${{ github.workspace }}
-          cd ./web/actions-vue/
-          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
 
       - name: Fin del trabajo
         run: echo "Desplegament a producció finalitzat"
