@@ -7,7 +7,10 @@ jobs:
     steps:
       - name: Obtenint el codi del respositori
         uses: actions/checkout@v4
-
+      -name: lint
+        run: |
+        npm install
+        npm run lint
       - name: scp a produccio
         run: |
           echo "${{ secrets.PROD_KEY }}" > ~/prod_key.pem
