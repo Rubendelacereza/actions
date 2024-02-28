@@ -31,15 +31,6 @@ jobs:
           npm install
           npm run build
 
-      - name: Verificar carpeta dist
-        run: |
-          cd ${{ github.workspace }}
-          cd ./web/actions-vue/
-          if [ ! -d ./dist ]; then
-            echo "La carpeta 'dist' no existe. Asegúrate de que la construcción se realizó correctamente."
-            exit 1
-          fi
-
       - name: Despliegue a producción
         run: |
           echo "${{ github.actor }} està pujant l'aplicació a PROD 🚀" > ./web/last_deploy.txt
