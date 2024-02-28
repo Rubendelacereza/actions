@@ -1,12 +1,26 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
-
+/**
+ * Counter Store for managing count state.
+ * @returns {Object} - Object containing count, doubleCount, and increment.
+ */
 export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
+  /**
+   * Counter value.
+   * @type {Ref<number>}
+   */
+  const count = ref(0);
+
+  /**
+   * Computed property representing double the count value.
+   * @type {Ref<number>}
+   */
+  const doubleCount = computed(() => count.value * 2);
+
+  /**
+   * Increment the counter value.
+   */
   function increment() {
-    count.value++
+    count.value++;
   }
 
-  return { count, doubleCount, increment }
-})
+  return {count, doubleCount, increment};
+});
