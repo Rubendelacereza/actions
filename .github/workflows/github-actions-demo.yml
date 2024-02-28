@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Inicio del trabajo
-        run: echo "Iniciant el treball de desplegament" 
+        run: echo "Rubendelacereza està pujant l'aplicació a PROD 🚀"
 
       - name: Obtenint el codi del repositori
         uses: actions/checkout@v4
