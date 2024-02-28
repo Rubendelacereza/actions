@@ -28,6 +28,14 @@ jobs:
           cd ./web/actions-vue/
           npm install
           npm run build
+
+          # Asegúrate de que la carpeta dist existe
+          if [ ! -d ./dist ]; then
+            echo "La carpeta 'dist' no existe. Asegúrate de que la construcción se realizó correctamente."
+            exit 1
+          fi
+
+          # Copia archivos a producción usando SCP
           scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
           
       - run: echo "🍏 This job's status is ${{ job.status }}."
