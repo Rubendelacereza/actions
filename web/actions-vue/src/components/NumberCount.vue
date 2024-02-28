@@ -1,15 +1,14 @@
-<!-- Number.vue -->
-
 <template>
   <div>
-    <button v-for="number in numbers" :key="number" @click="handleClick(number)" :class="{ 'clicked': clickedNumbers.includes(number) }">
+    <button v-for="number in numbers" :key="number" @click="handleClick(number)"
+    :class="{ 'clicked': clickedNumbers.includes(number) }">
       {{ number }}
     </button>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const clickedNumbers = ref([]);
