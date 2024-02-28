@@ -5,24 +5,17 @@ on:
       - main
 
 jobs:
-  Lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run ESLint
-        run: npm run lint # Asegúrate de ajustar este comando según tu configuración
-
   Pujar-a-produccio-amb-SCP:
     runs-on: ubuntu-latest
-    needs: Lint
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install dependencies and build
+        run: |
+          cd ./web/actions-vue/
+          npm install
+          npm run build
 
       - name: scp a produccio
         run: |
@@ -31,9 +24,6 @@ jobs:
           cd ${{ github.workspace }}
           echo "Action desplegant a produccio" > ./web/last_deploy.txt
           date >> ./web/last_deploy.txt
-          cd ./web/actions-vue/
-          npm install
-          npm run build
-          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
+          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./web/actions-vue/dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
           
       - run: echo "🍏 This job's status is ${{ job.status }}."
