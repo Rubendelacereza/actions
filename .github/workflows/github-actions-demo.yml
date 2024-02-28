@@ -1,21 +1,12 @@
 name: Preparant per producció
-on:
-  push:
-    branches:
-      - main
-
+run-name: ${{ github.actor }} està pujant l'aplicació a PROD  🚀
+on: [push]
 jobs:
   Pujar-a-produccio-amb-SCP:
     runs-on: ubuntu-latest
     steps:
       - name: Obtenint el codi del respositori
         uses: actions/checkout@v4
-
-      - name: Linting
-        run: |
-          cd ./web/actions-vue/
-          npm install
-          npm run lint # Asegúrate de ajustar este comando según tu configuración de ESLint
 
       - name: scp a produccio
         run: |
@@ -24,13 +15,9 @@ jobs:
           cd ${{ github.workspace }}
           echo "Action desplegant a produccio" > ./web/last_deploy.txt
           date >> ./web/last_deploy.txt
-          
-          # Instalar dependencias y construir el proyecto Vue
           cd ./web/actions-vue/
           npm install
           npm run build
-
-          # Copiar los archivos construidos a la carpeta de producción
           scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./distF/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
           
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🍏 This job's status is ${{ job.status }}."º
