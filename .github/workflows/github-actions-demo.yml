@@ -18,6 +18,6 @@ jobs:
           cd ./web/actions-vue/
           npm install
           npm run build
-          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./distF/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
+          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a20rubdelsan/web/a20rubdelsan.daw.inspedralbes.cat/public_html/
           
       - run: echo "🍏 This job's status is ${{ job.status }}."º
